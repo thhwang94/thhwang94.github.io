@@ -2,8 +2,8 @@ name: Deploy Hugo site
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,7 +11,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
@@ -20,20 +19,28 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.146.1'
+          hugo-version: "0.146.1"
 
       - name: Build
-        run: hugo --minify --source site
+        working-directory: site
+        run: hugo --minify
+
+      - name: Sanity check public output
+        run: |
+          ls -la site/public | head -n 50
+          test -f site/public/index.html
+          test -d site/public/posts
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site/public
+          publish_dir: site/public
           publish_branch: gh-pages
           force_orphan: true
           enable_jekyll: false
