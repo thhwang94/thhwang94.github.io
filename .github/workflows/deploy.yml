@@ -27,8 +27,7 @@ jobs:
           hugo-version: "0.146.1"
 
       - name: Build
-        working-directory: site
-        run: hugo --minify
+        run: hugo --minify --source site --destination site/public
 
       - name: Sanity check public output
         run: |
