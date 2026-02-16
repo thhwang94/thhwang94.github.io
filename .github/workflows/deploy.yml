@@ -27,7 +27,21 @@ jobs:
           hugo-version: "0.146.1"
 
       - name: Build
-        run: hugo --minify --source site --destination public
+        working-directory: site
+        run: hugo --minify
+
+      - name: Debug output dirs
+        run: |
+          echo "== PWD =="
+          pwd
+          echo "== ROOT ls =="
+          ls -la
+          echo "== FIND index.html under repo (maxdepth 4) =="
+          find . -maxdepth 4 -name index.html -o -name 404.html | sed -n '1,200p'
+          echo "== FIND public dirs (maxdepth 4) =="
+          find . -maxdepth 4 -type d -name public | sed -n '1,200p'
+          echo "== FIND posts dirs (maxdepth 6) =="
+          find . -maxdepth 6 -type d -name posts | sed -n '1,200p'
 
       - name: Sanity check public output
         run: |
@@ -39,7 +53,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: public
+          publish_dir: ./site/public
           publish_branch: gh-pages
           force_orphan: true
           enable_jekyll: false
