@@ -27,19 +27,19 @@ jobs:
           hugo-version: "0.146.1"
 
       - name: Build
-        run: hugo --minify --source site --destination site/public
+        run: hugo --minify --source site --destination public
 
       - name: Sanity check public output
         run: |
-          ls -la site/public | head -n 50
-          test -f site/public/index.html
-          test -d site/public/posts
+          ls -la public | head -n 50
+          test -f public/index.html
+          test -d public/posts
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: site/public
+          publish_dir: public
           publish_branch: gh-pages
           force_orphan: true
           enable_jekyll: false
