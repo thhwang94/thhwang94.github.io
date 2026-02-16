@@ -1,0 +1,20 @@
+baseURL = "https://thhwang94.github.io/"
+languageCode = "ko"
+title = "Thinking Archive"
+theme = "PaperMod"
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  mainSections = ["posts"]
+  disableSpecial1stPost = true
+
+  [params.profileMode]
+    enabled = false
+
+[menu]
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 1
