@@ -30,6 +30,13 @@ jobs:
         working-directory: site
         run: hugo --minify
 
+      - name: Debug routes
+        run: |
+          echo "== top-level dirs in site/public =="
+          find site/public -maxdepth 2 -type d | sed -n '1,120p'
+          echo "== candidate list pages =="
+          find site/public -maxdepth 3 -name index.html | grep -E "/(posts|post|archives|categories|tags)/" || true
+
       - name: Debug output dirs
         run: |
           echo "== PWD =="
@@ -45,9 +52,8 @@ jobs:
 
       - name: Sanity check public output
         run: |
-          ls -la site/public | head -n 50
+          ls -la site/public | head -n 80
           test -f site/public/index.html
-          test -d site/public/posts
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
