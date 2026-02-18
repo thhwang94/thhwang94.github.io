@@ -1,0 +1,16 @@
+baseURL = "https://thhwang94.github.io/"
+languageCode = "ko"
+title = "Thinking Archive"
+theme = "PaperMod"
+
+# 추천(상대경로 문제 예방)
+canonifyURLs = false
+relativeURLs = false
+
+[params]
+  mainSections = ["posts"]
+  disableThemeToggle = false
+  ShowReadingTime = true
+
+  [params.profileMode]
+    enabled = false
