@@ -37,14 +37,24 @@ jobs:
         run: |
           python scripts/notion_to_hugo.py
 
+      - name: Debug git status
+        run: |
+          echo "== git status =="
+          git status --porcelain
+          echo "== list generated files =="
+          ls -la site/content/posts | head -n 200
+
       - name: Commit & push if changed
         run: |
-          if git status --porcelain | grep -q .; then
-            git config user.name "notion-sync-bot"
-            git config user.email "notion-sync-bot@users.noreply.github.com"
-            git add site/content/posts
-            git commit -m "Sync Notion posts"
-            git push origin main
-          else
-            echo "No changes."
+          git config user.name "notion-sync-bot"
+          git config user.email "notion-sync-bot@users.noreply.github.com"
+
+          git add site/content/posts
+
+          if git diff --cached --quiet; then
+            echo "No changes after staging."
+            exit 0
           fi
+
+          git commit -m "Sync Notion posts"
+          git push origin main
