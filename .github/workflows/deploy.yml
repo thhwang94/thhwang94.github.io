@@ -55,11 +55,11 @@ jobs:
           ls -la site/public | head -n 80
           test -f site/public/index.html
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site/public
           publish_branch: gh-pages
+          publish_dir: site/public
           force_orphan: true
           enable_jekyll: false
