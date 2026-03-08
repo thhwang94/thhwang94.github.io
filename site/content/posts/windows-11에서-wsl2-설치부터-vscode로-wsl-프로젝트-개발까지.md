@@ -1,6 +1,6 @@
 ---
 title: "Windows 11에서 WSL2 설치부터 VSCode로 WSL 프로젝트 개발까지"
-date: 2026-03-07
+date: 2026-03-08
 draft: false
 type: "정리"
 tags: []
